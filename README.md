@@ -59,3 +59,19 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+## How to Make a User an Admin
+
+To set a user as an admin, update their `web_role` value in the database:
+
+1. Open your database (using phpMyAdmin, MySQL CLI, etc.)
+2. Find the user in the `users` table.
+3. Change the `web_role` column for that user to **5**.
+4. Save the changes.
+
+Example SQL query:
+
+```sql
+UPDATE users SET web_role = 5 WHERE id = USER_ID;
+
