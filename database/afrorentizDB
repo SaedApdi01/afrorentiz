@@ -1,0 +1,278 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               8.0.42 - MySQL Community Server - GPL
+-- Server OS:                    Win64
+-- HeidiSQL Version:             12.1.0.6537
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Dumping database structure for afrorentiz
+DROP DATABASE IF EXISTS `afrorentiz`;
+CREATE DATABASE IF NOT EXISTS `afrorentiz` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `afrorentiz`;
+
+-- Dumping structure for table afrorentiz.cache
+DROP TABLE IF EXISTS `cache`;
+CREATE TABLE IF NOT EXISTS `cache` (
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiration` int NOT NULL,
+  PRIMARY KEY (`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table afrorentiz.cache: ~2 rows (approximately)
+DELETE FROM `cache`;
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
+	('afrorentis_cache_iftiinshe15@gmail.com|127.0.0.1', 'i:1;', 1753984546),
+	('afrorentis_cache_iftiinshe15@gmail.com|127.0.0.1:timer', 'i:1753984546;', 1753984546);
+
+-- Dumping structure for table afrorentiz.cache_locks
+DROP TABLE IF EXISTS `cache_locks`;
+CREATE TABLE IF NOT EXISTS `cache_locks` (
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiration` int NOT NULL,
+  PRIMARY KEY (`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table afrorentiz.cache_locks: ~0 rows (approximately)
+DELETE FROM `cache_locks`;
+
+-- Dumping structure for table afrorentiz.failed_jobs
+DROP TABLE IF EXISTS `failed_jobs`;
+CREATE TABLE IF NOT EXISTS `failed_jobs` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table afrorentiz.failed_jobs: ~0 rows (approximately)
+DELETE FROM `failed_jobs`;
+
+-- Dumping structure for table afrorentiz.jobs
+DROP TABLE IF EXISTS `jobs`;
+CREATE TABLE IF NOT EXISTS `jobs` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attempts` tinyint unsigned NOT NULL,
+  `reserved_at` int unsigned DEFAULT NULL,
+  `available_at` int unsigned NOT NULL,
+  `created_at` int unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `jobs_queue_index` (`queue`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table afrorentiz.jobs: ~0 rows (approximately)
+DELETE FROM `jobs`;
+
+-- Dumping structure for table afrorentiz.job_batches
+DROP TABLE IF EXISTS `job_batches`;
+CREATE TABLE IF NOT EXISTS `job_batches` (
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total_jobs` int NOT NULL,
+  `pending_jobs` int NOT NULL,
+  `failed_jobs` int NOT NULL,
+  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext COLLATE utf8mb4_unicode_ci,
+  `cancelled_at` int DEFAULT NULL,
+  `created_at` int NOT NULL,
+  `finished_at` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table afrorentiz.job_batches: ~0 rows (approximately)
+DELETE FROM `job_batches`;
+
+-- Dumping structure for table afrorentiz.messages
+DROP TABLE IF EXISTS `messages`;
+CREATE TABLE IF NOT EXISTS `messages` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `sender_id` bigint unsigned NOT NULL,
+  `receiver_id` bigint unsigned NOT NULL,
+  `property_id` bigint unsigned NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `messages_sender_id_foreign` (`sender_id`),
+  KEY `messages_receiver_id_foreign` (`receiver_id`),
+  KEY `messages_property_id_foreign` (`property_id`),
+  CONSTRAINT `messages_property_id_foreign` FOREIGN KEY (`property_id`) REFERENCES `properties` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `messages_receiver_id_foreign` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `messages_sender_id_foreign` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table afrorentiz.messages: ~3 rows (approximately)
+DELETE FROM `messages`;
+INSERT INTO `messages` (`id`, `sender_id`, `receiver_id`, `property_id`, `message`, `created_at`, `updated_at`) VALUES
+	(1, 1, 2, 2, 'Asc waxaan rabaa gurigaan walaal ila sooxiriir', '2025-06-19 11:19:08', '2025-06-19 11:19:08'),
+	(4, 2, 1, 2, 'ss', '2025-06-19 12:24:16', '2025-06-19 12:24:16'),
+	(6, 4, 1, 1, 'hello', '2025-06-24 13:37:43', '2025-06-24 13:37:43');
+
+-- Dumping structure for table afrorentiz.migrations
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table afrorentiz.migrations: ~4 rows (approximately)
+DELETE FROM `migrations`;
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+	(1, '0001_01_01_000000_create_users_table', 1),
+	(2, '0001_01_01_000001_create_cache_table', 1),
+	(3, '0001_01_01_000002_create_jobs_table', 1),
+	(4, '2025_06_18_162335_create_properties_table', 1),
+	(5, '2025_06_19_140234_create_messages_table', 2);
+
+-- Dumping structure for table afrorentiz.password_reset_tokens
+DROP TABLE IF EXISTS `password_reset_tokens`;
+CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table afrorentiz.password_reset_tokens: ~2 rows (approximately)
+DELETE FROM `password_reset_tokens`;
+INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
+	('webdenopro@gmail.com', '$2y$12$cH4inZ5TH59IVoJHN4b9O.GPm/CnrkO8ufyb74YycqJWQNA30jbu2', '2025-06-19 14:32:45');
+
+-- Dumping structure for table afrorentiz.properties
+DROP TABLE IF EXISTS `properties`;
+CREATE TABLE IF NOT EXISTS `properties` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `price` double NOT NULL,
+  `property_type` enum('Villa','Apartment','Condo','House','Studio','Office') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Apartment',
+  `listing_type` enum('rent','sale') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'sale',
+  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bedrooms` int NOT NULL DEFAULT '0',
+  `bathrooms` int NOT NULL DEFAULT '0',
+  `parking_spaces` int NOT NULL DEFAULT '0',
+  `wifi` int NOT NULL DEFAULT '0',
+  `elevator` tinyint(1) NOT NULL DEFAULT '0',
+  `garden` tinyint(1) NOT NULL DEFAULT '0',
+  `pool` tinyint(1) NOT NULL DEFAULT '0',
+  `image_1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_3` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `properties_slug_unique` (`slug`),
+  KEY `properties_user_id_foreign` (`user_id`),
+  CONSTRAINT `properties_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table afrorentiz.properties: ~4 rows (approximately)
+DELETE FROM `properties`;
+INSERT INTO `properties` (`id`, `user_id`, `title`, `slug`, `description`, `price`, `property_type`, `listing_type`, `country`, `city`, `address`, `bedrooms`, `bathrooms`, `parking_spaces`, `wifi`, `elevator`, `garden`, `pool`, `image_1`, `image_2`, `image_3`, `created_at`, `updated_at`) VALUES
+	(1, 1, 'Spacious Suburban Oasis', 'spacious-suburban-oasis', 'Welcome to your spacious suburban oasis, a beautiful family house designed for both grand entertaining and cozy family life. This home offers generous living spaces, bright and airy rooms, and a layout that flows effortlessly from one area to the next. The expansive backyard provides ample room for recreation and gardening, while the quiet, tree-lined street ensures peaceful living. With its classic charm and modern updates, this house is ready to become your family\'s cherished retreat.', 1200, 'Apartment', 'rent', 'Somalia', 'Woqooyi Galbeed', 'Hargeisa', 8, 4, 3, 1, 1, 1, 1, 'http://afrorentiz.test/storage/properties/property-Saed  Mohamed-xWlopV5u9f-1750275590.webp', NULL, NULL, '2025-06-18 16:39:50', '2025-06-19 13:42:26'),
+	(2, 1, 'Beautiful Family House', 'beautiful-family-house', 'This charming family house offers the perfect blend of comfort and style. With spacious rooms and a warm, inviting atmosphere, it\'s an ideal home for creating lasting memories. The property boasts a well-maintained garden, perfect for outdoor activities and relaxation, and is situated in a friendly, quiet neighborhood. Inside, you\'ll find modern amenities and thoughtful touches throughout, making it move-in ready for its new owners.', 349000, 'Condo', 'sale', 'Ethiopia', 'Addis Ababa', 'Bole , rwanda', 4, 2, 1, 0, 0, 1, 1, 'http://afrorentiz.test/storage/properties/property-Saed  Mohamed-3sgTPsNVEK-1750340615.jpg', 'http://afrorentiz.test/storage/properties/property-Saed  Mohamed-bXyf52fOEj-1750340622.jpg', 'http://afrorentiz.test/storage/properties/property-Saed  Mohamed-AoIU4xmFxU-1750340628.webp', '2025-06-18 16:40:55', '2025-06-19 10:43:48'),
+	(3, 2, 'Charming & Contemporary Family Haven', 'charming-contemporary-family-haven', 'Step into this charming and contemporary family haven, a beautifully appointed house designed for modern living. This home features a bright, open-plan layout that seamlessly connects its comfortable living areas, making it perfect for both everyday life and entertaining. Each room is thoughtfully designed to maximize space and natural light, creating an inviting atmosphere throughout. Outside, you\'ll discover a delightful, low-maintenance garden, offering a private escape for relaxation. Nestled in a sought-after, family-friendly neighborhood, this house offers the ideal blend of tranquility and convenience, ready for you to make it your own.', 234, 'House', 'rent', 'Uganda', 'Kampala', 'kampala', 3, 1, 2, 1, 1, 1, 1, 'http://afrorentiz.test/storage/properties/property-Deno Pro-5doDn65wDe-1750278153.jpg', 'http://afrorentiz.test/storage/properties/property-Deno Pro-Ybok27xXkh-1750278153.jpg', 'http://afrorentiz.test/storage/properties/property-Deno Pro-agWXvnAdSQ-1750278153.jpeg', '2025-06-18 17:22:33', '2025-06-18 17:22:33');
+
+-- Dumping structure for table afrorentiz.sessions
+DROP TABLE IF EXISTS `sessions`;
+CREATE TABLE IF NOT EXISTS `sessions` (
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint unsigned DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_activity` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sessions_user_id_index` (`user_id`),
+  KEY `sessions_last_activity_index` (`last_activity`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table afrorentiz.sessions: ~27 rows (approximately)
+DELETE FROM `sessions`;
+INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
+	('0rt8Gotz3rpZ5PghE7MLPw3OUCAhGUEvTxXGiDzB', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Herd/1.20.2 Chrome/120.0.6099.291 Electron/28.2.5 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiem51WXRDRGpjenFZY0VuNTNlZmpySnNjbzJNeU9OY2I3cFhnY3RNZCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9hZnJvLnRlc3QvP2hlcmQ9cHJldmlldyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1752076582),
+	('1nxYe5L2PWhd0YRYpRMWK6Kek3lDkOK9XmDVFpXK', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Herd/1.20.2 Chrome/120.0.6099.291 Electron/28.2.5 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiOFZKTlg5NURJY202eXZpRFVHakREOXZIYTdKY3VtUGtuQlV5OVYwMyI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozNjoiaHR0cDovL2Fmcm9yZW50aXoudGVzdC8/aGVyZD1wcmV2aWV3Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1750840872),
+	('8CjcZfO4hVsUEzNKBZuwKcwZDsVzoz8T9VKWL7Qg', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Herd/1.20.2 Chrome/120.0.6099.291 Electron/28.2.5 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoidlJ5aTZGaE1kOXl0bGZwTjVoZnZkT25GV3QxU3FuQ3dzMXhmMVB6WCI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozNjoiaHR0cDovL2Fmcm9yZW50aXoudGVzdC8/aGVyZD1wcmV2aWV3Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1750779434),
+	('8xJmQoFo32IVyQoocn9z7Z6e6OJzb89WQjXq61KG', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiWFBjYW9vdVpnVWNqWE9WVGpxaGlKeFRnMkU2akN5QzhQZ0RjdFN6SCI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyODoiaHR0cDovL2Fmcm9yZW50aXoudGVzdC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6MzoidXJsIjthOjE6e3M6ODoiaW50ZW5kZWQiO3M6MzU6Imh0dHA6Ly9hZnJvcmVudGl6LnRlc3QvYWRkLXByb3BlcnR5Ijt9fQ==', 1750954845),
+	('aeZZSjffTLRampZy8qcL0Ja0VLVuTituvDfxXjiG', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicGd3MjRPTzBLaTZwQnRpRDlLaUpMejZ5bTE5UFdqZzBBSjNKQ0ZLeSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTY6Imh0dHA6Ly9hZnJvLnRlc3QiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1751298468),
+	('AFoWDJvMNRZq6bch9tkz7dcggjI8g8MYUcVZf1VD', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiSkpmQ0FFNUpFQjlQb1hOWVlvZTdSaGlQajBxcXRZTXlzM0Q3S0d4WiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTY6Imh0dHA6Ly9hZnJvLnRlc3QiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1751298468),
+	('cdjKUtYTNfHdvvsac9pcFlKQqkP1RrzO2HpVWv46', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Herd/1.20.2 Chrome/120.0.6099.291 Electron/28.2.5 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiMGFzSnhtQUJLemF2N2xQUjBVN2pmbEVTYmkzbEtHcU82amdiZDVPdCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9hZnJvLnRlc3QvP2hlcmQ9cHJldmlldyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1751298468),
+	('CGVGd3ia0spKAE49XtfLee0txmXjmOP9mq2HBgNu', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Herd/1.20.2 Chrome/120.0.6099.291 Electron/28.2.5 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoidGM4dFNLSXg2dnlNVWdzTVhhaXFmVm83R3RaYTRQemN3TG5JenZoQiI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozNjoiaHR0cDovL2Fmcm9yZW50aXoudGVzdC8/aGVyZD1wcmV2aWV3Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1753984450),
+	('eu09tcgPhL6ikikjwGeRCP4Dsl4OhznAmple61pG', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiUVZCcjJDREVieVgyaVdhZjVPczVFUndPWXhxMmhBS0swU2RxeGFReCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTY6Imh0dHA6Ly9hZnJvLnRlc3QiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1751309658),
+	('EWmpDRxxL7TtEyH8zCSjY6ZAub0kSyi8LBxQvzAk', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiemZXWFFFNG95N1p6VWIwNFlGRFF6YnNKUTRlRjZEd2tTcFNUWFlwdCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTY6Imh0dHA6Ly9hZnJvLnRlc3QiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1751301152),
+	('f3sPGDI7IcsVqwdg4bB8hyJh6pAeXwSMKeRRkn06', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Herd/1.20.2 Chrome/120.0.6099.291 Electron/28.2.5 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiZzhiaWQ1dGE4NldvS0cyeFJtQWYxVU0xR0lqRGx5WHhRVzJHdXB6SyI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozNjoiaHR0cDovL2Fmcm9yZW50aXoudGVzdC8/aGVyZD1wcmV2aWV3Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1750954838),
+	('gNuSUGJOTah9rA3l1DExxAGGar1zH31rGdwb7kjF', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiT1g3c3JtWm9aaUw2M3FhV2lMSWs3NEVhdjBtUVRKMWdKNlI1TjM4VyI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyMjoiaHR0cDovL2Fmcm9yZW50aXoudGVzdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1753984450),
+	('H8w4s2VZxP2uih4yX2XMW7eTSfvE2gnJksSI0kkB', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Herd/1.20.2 Chrome/120.0.6099.291 Electron/28.2.5 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZ1RUM0FXcjB2STE1VE1lRXF1S1VOcGNUVUZBUDFwWDJpbFdEaGhHciI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9hZnJvLnRlc3QvP2hlcmQ9cHJldmlldyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1750873859),
+	('iLsJ5RtARDUyvKRRqZTHeaM4FpgAA8oaWAxOdxmp', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiRFF2Zzc2TDlEdkVCV0o0UUNWbVFqTFNOYnhEc3Nmcndlam1UWFQwaCI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyMjoiaHR0cDovL2Fmcm9yZW50aXoudGVzdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1753984450),
+	('kgKaN8xO8j9GnEKKJiX4FwJ2q81hcMhwZQaI1zOX', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Herd/1.20.2 Chrome/120.0.6099.291 Electron/28.2.5 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoidWYycG43S1FtWlVYMzMxR2F5ZWl5YUFnc1Q2SXRsRE1BWnJnT3R6dyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9hZnJvLnRlc3QvP2hlcmQ9cHJldmlldyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1751480740),
+	('KYiZxCJ4PDrfFeSHkoAoDzqVDmubcA7HwjWTC1TI', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Herd/1.20.2 Chrome/120.0.6099.291 Electron/28.2.5 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiT3M3cGFUamNSS2kzREYzQWVOajdhWGdjU3BOb0lnRnFmUUEzMEh6NSI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozNjoiaHR0cDovL2Fmcm9yZW50aXoudGVzdC8/aGVyZD1wcmV2aWV3Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1751476860),
+	('PKFivEc4PmbBpCg23U2okEbqoJ0hQgfsbARvO0Td', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Herd/1.20.2 Chrome/120.0.6099.291 Electron/28.2.5 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiblo2UWRlS1JOU2lqd3dzQmVUdnJVM3RJME1BaExzajZYaDlNMzJkbiI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozNjoiaHR0cDovL2Fmcm9yZW50aXoudGVzdC8/aGVyZD1wcmV2aWV3Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1751134341),
+	('QD1pNsfIs7SfDDcvIp73TvsiyNrFvNuyW6c20tob', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Herd/1.20.2 Chrome/120.0.6099.291 Electron/28.2.5 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiV3doVkdJQTNPcWdteFlBaEtBYWlWOThYalk2Z3E0WHZqM0s0ZlM1dSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9hZnJvLnRlc3QvP2hlcmQ9cHJldmlldyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1753984460),
+	('QXOuQc2fdMwlcXygNM4o4bctMAclXVIxpjrMZdxe', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Herd/1.20.2 Chrome/120.0.6099.291 Electron/28.2.5 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiREdBcmRLcTIxQkY0YjdyUXM1VkJhSEJ0cXY3bGdtYXVCaDFZNFNTdyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9hZnJvLnRlc3QvP2hlcmQ9cHJldmlldyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1751481758),
+	('R9CGTLIZOrRkAJwslpXxV7woUj7TMA5Mocn8WMlH', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiTEk2OWUzaEFRWFdUZHE3SnJ3V2Q4YVFEdkRuOEFjZ3lNU1RjUG5MYiI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozNToiaHR0cDovL2Fmcm9yZW50aXoudGVzdC9hZGQtcHJvcGVydHkiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjM6InVybCI7YToxOntzOjg6ImludGVuZGVkIjtzOjU0OiJodHRwOi8vYWZyb3JlbnRpei50ZXN0L3Byb3BlcnR5L2JlYXV0aWZ1bC1mYW1pbHktaG91c2UiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo1O30=', 1753984915),
+	('RXZv9kVOzn0thM8SZnudSWY27pWP65QMdCjGYKS4', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoicFQ3bHNuemVVc2liNW1Na0pHWGI4VUt0UTVrYzhVbTFOM3ZkU1cyQSI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyMjoiaHR0cDovL2Fmcm9yZW50aXoudGVzdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1753984450),
+	('SdZQOPGmGqAMLJvSaEMQs2Fie6Obc8wjSZtQjPtT', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Herd/1.21.1 Chrome/120.0.6099.291 Electron/28.2.5 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiMDJ6Q3BCWlJaNFg1enpmcWFtMmgweUNINzIxOU4zSjJDM3c5eE1NWCI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozNjoiaHR0cDovL2Fmcm9yZW50aXoudGVzdC8/aGVyZD1wcmV2aWV3Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1753984820),
+	('tN2mrmJoWme3wdQTmrJuI7PQnUntINvEs1d74vOi', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Herd/1.20.2 Chrome/120.0.6099.291 Electron/28.2.5 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQjlTZFdHdzBUdUlrMjUxOXU2eUNISTJhNEVKa2VJWUU2TURBVzhqWiI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozNjoiaHR0cDovL2Fmcm9yZW50aXoudGVzdC8/aGVyZD1wcmV2aWV3Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1750926063),
+	('VzBqgbuXqXVHS4pyl8VHQGop9l5JGNHZAF9fqM2H', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiUjhLUFpoSkNqOU40Ull3UzhMcnNwa0oxbVpvTGpWUnFrVzhiMTFRcCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTY6Imh0dHA6Ly9hZnJvLnRlc3QiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1751298468),
+	('xSAZ44rJe1qjSC8oPZm2YkpbPizZEqOFYD3CBhl7', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQXdvU1BRWHVseDAzUlBBS2tpU0x5UGMzVnJDRjZ0MkkyWU9Nd2xrcCI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyMjoiaHR0cDovL2Fmcm9yZW50aXoudGVzdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1753984450),
+	('yEGhNbVv2aPx0RSn9PwG45XgpJQEueiTrJ26hEhS', 4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiUHBKN3VxRld2NG84cTh1RWphOENMUWE5VUFDZnhiZXljV1dPMnBjOCI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyMjoiaHR0cDovL2Fmcm9yZW50aXoudGVzdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6MzoidXJsIjthOjA6e31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo0O30=', 1750783539),
+	('ySIk5wc5x7lGc4XkOkfWHDZeg780SJT4tPd4aoWU', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiM0ZmVFhZZUo4S3pNMUpXQnYyQk0xdVQwd3ZTNjhvQkdMRHZ6ZEhjSiI7czoxODoiZmxhc2hlcjo6ZW52ZWxvcGVzIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyMjoiaHR0cDovL2Fmcm9yZW50aXoudGVzdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1753984450);
+
+-- Dumping structure for table afrorentiz.users
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `web_role` int NOT NULL DEFAULT '0',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `whatsapp` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `document` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table afrorentiz.users: ~5 rows (approximately)
+DELETE FROM `users`;
+INSERT INTO `users` (`id`, `web_role`, `name`, `email`, `image`, `phone`, `whatsapp`, `document`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+	(1, 5, 'Saed  Mohamed', 'saedabdullahi7@gmail.com', 'http://afrorentiz.test/storage/user-profiles/profile-Saed  Mohamed-VtoV3rQFZ2-1750275672.jpg', '906593368', '906593368', 'http://afrorentiz.test/storage/user-profiles/profile-Saed  Mohamed-7EX3KKANPT-1750341578.pdf', NULL, '$2y$12$j3zmctp/Pitwv9zmyKb3jubkTnGkm7wOEkXATPT8EVFjwayziaRxy', '4EIWGFZnC6YYhyNtei4q4jBLrbtiRmi1eZFPl90uTsPohm8lRW6vc3V8YVOo', '2025-06-18 16:35:09', '2025-06-19 14:35:02'),
+	(2, 0, 'Deno Pro', 'webdenopro@gmail.com', NULL, NULL, NULL, NULL, NULL, '$2y$12$e9QL8z/fUZnbIalk0Wd.nO0IE8ObQO85MLicbRVPrpFHaZBPeL/xq', NULL, '2025-06-18 17:08:17', '2025-06-18 17:08:17'),
+	(3, 0, 'Abdi Ali', 'abdi@gmail.com', 'http://afrorentiz.test/storage/user-profiles/profile-Abdi Ali-SPBGyjEonj-1750354131.jpg', '+2549999999', '+2549999999', 'http://afrorentiz.test/storage/user-profiles/profile-Abdi Ali-7vlkp5QxWx-1750354161.pdf', NULL, '$2y$12$isDH2osUSS/qgdZJd/H7Zur/7.iRxQytBAnfKI9YjluYv4nh83eda', NULL, '2025-06-19 13:56:07', '2025-06-19 14:29:21'),
+	(4, 5, 'Dahab', 'iftiinshe15@gmail.com', NULL, '+25444444444', '+254444444444444444', '/uploads/user-profiles/profile-Dahab-PAx3xxuJR4-1750783105.jpeg', NULL, '$2y$12$qL/eEKjPVK/3VRF0CqEEpuYSsXakB2fceU7r3zkV2LN5/FdmXpTTW', NULL, '2025-06-21 05:04:57', '2025-06-24 13:38:25'),
+	(5, 0, 'Arden Mcclain', 'vugazyb@mailinator.com', NULL, '+1 (924) 471-2791', '+1 (924) 471-2791', '/uploads/user-profiles/profile-Mohammad Kramer-lrP4TIjBjH-1753984584.png', NULL, '$2y$12$kPVXJghOInmKqfL1lf/ouOGVT5FfQButRjT96Wah9F/EBKtAVtBjS', NULL, '2025-07-31 14:55:42', '2025-07-31 14:56:24');
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
